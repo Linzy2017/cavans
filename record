@@ -71,3 +71,7 @@
         m22：竖直方向的缩放
         dx：水平方向的移动
         dy：竖直方向的移动
+7.动画
+     setInterval(function, delay)
+     setTimeout(function, delay)
+     requestAnimationFrame(callback) 逐帧动画
