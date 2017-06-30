@@ -1,0 +1,73 @@
+1.画画先判断支持性 if (canvas.getContext)
+2.形状
+    矩形
+        填充矩形 fillRect(x, y, width, height)
+        边框矩形 strokeRect(x, y, width, height)
+        清除指定矩形区域，让清除部分完全透明  clearRect(x, y, width, height)
+     绘制路线：  创建起点=> 根据命令画路径=> 封闭路径=> 填充
+        beginPath() 新建路径，图形绘制命令被指向到路径上生成路径 当其为空第一路径为moveTo（）
+        closePath() 闭合路径，绘制命令又重新指向到上下
+        stroke() 通过线条来绘制图形轮廓  不自动闭合
+        fill()   自动闭合绘画的路径且填充图形
+        moveTo（x,y） 将笔触移动到X,Y的坐标
+    线条
+        lineTo(x, y) 绘制笔触到（x，y）位置的直线
+    圆弧
+                                                                 画一个以（x,y）为圆心的以radius为半径
+         arc(x, y, radius, startAngle, endAngle, anticlockwise)  的圆弧（圆），从startAngle开始到endAngle结束，按照
+                                                                 anticlockwise给定的方向（默认为顺时针false）来生成
+         actTo ?????
+     贝塞尔曲线
+        quadraticCurveTo(cp1x, cp1y, x, y) 绘制二次贝塞尔曲线，cp1x,cp1y为一个控制点，x,y为结束点
+        bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y) 绘制三次贝塞尔曲线，cp1x,cp1y为控制点一，cp2x,cp2y为控制点二，x,y为结束点
+3.样式添加
+    fillStyle = color 填充颜色
+    strokeStyle = color 轮廓的颜色
+    rgba(a,b,c,透明度)   globalAlpha = 透明度
+    线型
+        lineWidth = value 线条宽度
+        lineCap = type 线条末端样式  （butt方形结束，round圆形结束，square方形结束增加了一个宽度和线段相）
+        miterLimit = value
+        setLineDash(segments) 设置当前虚线样式
+        lineDashOffset = value 设置虚线样式的起始偏移量
+    渐变
+        createLinearGradient(x1, y1, x2, y2) 渐变的起点 (x1,y1) 与终点 (x2,y2)
+        createRadialGradient(x1, y1, r1, x2, y2, r2) 一个以 (x1,y1) 为原点，半径为 r1 的圆，后三个参数则定义另一个以 (x2,y2) 为原点，半径为 r2 的圆
+        addColorStop(position, color) 创建出 canvasGradient 对象后，我们就可以用 addColorStop 方法给它上色了
+    图案样式
+        createPattern(image, type) Image 可以是一个 Image 对象的引用 Type 必须是下面的字符串值之一：repeat，repeat-x，repeat-y 和 no-repeat
+            ex: var img = new Image();
+                img.src = 'someimage.png';
+                var ptrn = ctx.createPattern(img,'repeat');
+    阴影
+        shadowOffsetX = float
+        shadowOffsetY = float  设定阴影在 X 和 Y 轴的延伸距离，默认都为 0
+        shadowBlur = float    阴影的模糊程度，默认为 0
+        shadowColor = color   阴影颜色效果，默认是全透明的黑色
+    填充规则
+        nonzero  默认值.
+        evenodd  自己与自己路径相交或者路径被嵌套的时候 相交的不填充
+4.文本
+    fillText(text, x, y [, maxWidth]) 填充文本
+    strokeText(text, x, y [, maxWidth]) 边框本文
+        font = '字体大小 字体
+        textAlign = value 文本对齐方式 start, end, left, right or center. 默认值是 start
+        textBaseline = value 基线对齐方式 top, hanging, middle, alphabetic, ideographic, bottom。默认值是 alphabetic
+        direction = value 文本方向 ltr, rtl, inherit.默认值是 inherit
+    measureText() 返回一个对象的宽度、所在像素
+5.图像绘画
+    drawImage(image, x, y)   image 是 image 或者 canvas 对象，x 和 y 是其在目标 canvas 里的起始坐标
+    drawImage(image, x, y, width, height)   width,height来控制图片大小
+    drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) 切片 sx,sy切片坐标;dx.dy图片纺织位子;sw,sh为切片大小;dw,dh图片控制大小
+6.变形
+     save() 和 restore()  对应保存和恢复配置
+     translate(x, y) 移动x,y个偏移量
+     rotate(angle)  旋转angle角度
+     scale(x, y) 对应X,Y轴缩放 比1大放大，反之缩小
+     transform(m11, m12, m21, m22, dx, dy) 对变形矩阵直接修改
+        m11：水平方向的缩放
+        m12：水平方向的偏移
+        m21：竖直方向的偏移
+        m22：竖直方向的缩放
+        dx：水平方向的移动
+        dy：竖直方向的移动
