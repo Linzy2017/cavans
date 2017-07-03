@@ -2,9 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>demom1</title>
+    <title>game1</title>
+    <script src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
-
+<style>
+    canvas{
+        position: absolute;
+        left: 0;
+        top:0;
+    }
+</style>
+    <canvas id="canvas" width="800" height="400"></canvas>
+    <canvas id="canvas2" width="800" height="400"></canvas>
 </body>
+<script>
+    var zhuziUp = []
+    var zhuziDowm = []
+    var can = document.getElementById('canvas')
+    var ctx = can.getContext('2d')
+    var can2 = document.getElementById('canvas2')
+    var ctx2 = can2.getContext('2d')
+    var bgImg =  new Image()
+    var height = 185,v=0,a=0.05
+    //bgImg.src='./assist/demo1/bg.jpeg'
+    function draw () {
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.clearRect(0, 0, 800, 400)
+        zhuzimove()
+    }
+    function draw2 () {
+        ctx2.globalCompositeOperation = 'destination-over';
+        ctx2.clearRect(0, 0, 800, 400)
+        wutiMove()
+    }
+    function wutiMove(){
+        ctx2.save()
+        ctx2.fillStyle = 'rgba(0,0,0)';
+        v+=a
+        height+=v
+        ctx2.fillRect(40,height , 30, 30 )
+        if(height>=400 || height<=0){
+            clearInterval(time1)
+            clearInterval(time2)
+            alert('失败')
+            history.go(0)
+        }
+        if(zhuziUp.length >=13){
+            if(height <= zhuziUp[1] || height >= 400-zhuziDowm[1]){
+                clearInterval(time1)
+                clearInterval(time2)
+                alert('失败')
+                history.go(0)
+            }
+        }
+        ctx2.restore()
+    }
+    $('body').click(function(event){
+        v=-2.5
+    });
+    function zhuzimove() {
+        ctx.save()
+        ctx.translate(800,0);
+        ctx.fillStyle = 'red';
+        if(zhuziUp.length === 16){
+            zhuziUp.shift()
+        }
+        if(zhuziDowm.length === 16){
+            zhuziDowm.shift()
+        }
+        zhuziUp.push(Math.random()*160)
+        for(var i=0;i<zhuziUp.length;i++){
+            ctx.fillRect(-50*(zhuziUp.length - i), 0, 30,zhuziUp[i])
+        }
+        zhuziDowm.push(Math.random()*160)
+        ctx.translate(0,400);
+        //ctx.rotate(-Math.PI)
+        for(var i=0;i<zhuziDowm.length;i++){
+            ctx.fillRect(-50*(zhuziDowm.length - i), -zhuziDowm[i], 30,zhuziDowm[i])
+        }
+        ctx.restore()
+    }
+    var time1 = setInterval(draw2,10)
+    var time2 = setInterval(draw, 1000);
+</script>
 </html>
